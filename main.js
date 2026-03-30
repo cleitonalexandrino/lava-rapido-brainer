@@ -23,13 +23,23 @@ resizeCanvas();
 
 const frameCount = 241;
 const currentFrame = (index) => (
-  `./ezgif-244810dde00f094f-jpg/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`
+  // Using absolute path for Vercel deployment stability
+  `/ezgif-244810dde00f094f-jpg/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`
 );
 
 const images = [];
 const airpods = {
   frame: 0
 };
+
+// Global error handler to catch silent initialization failures
+window.addEventListener('error', (event) => {
+  const loaderText = document.getElementById('loader-text');
+  if (loaderText) {
+    loaderText.textContent = `Error: ${event.message}`;
+    loaderText.style.color = "red";
+  }
+});
 
 // Preload Images with Progress
 const preloadImages = () => {
@@ -38,32 +48,63 @@ const preloadImages = () => {
   const loaderText = document.getElementById('loader-text');
   const loader = document.getElementById('loader');
 
+  // Pre-allocate array to maintain sequence order since they will resolve out-of-order
+  images.length = frameCount;
+
   const checkComplete = () => {
     loadedCount++;
     const progress = Math.floor((loadedCount / frameCount) * 100);
     if (loaderBar) loaderBar.style.width = `${progress}%`;
-    if (loaderText) loaderText.textContent = `Loading Experience ${progress}%`;
+    if (loaderText && !loaderText.textContent.startsWith('Error')) {
+       loaderText.textContent = `Loading Experience ${progress}%`;
+    }
 
     if (loadedCount === frameCount) {
-      // All loaded
-      gsap.to(loader, {
-        autoAlpha: 0,
-        duration: 1,
-        ease: "power2.inOut",
-        onComplete: () => {
-          loader.style.display = 'none';
-          render();
-        }
-      });
+      if (loaderText && !loaderText.textContent.startsWith('Error')) {
+           // All loaded
+          gsap.to(loader, {
+            autoAlpha: 0,
+            duration: 1,
+            ease: "power2.inOut",
+            onComplete: () => {
+              loader.style.display = 'none';
+              render();
+            }
+          });
+      }
     }
   };
 
-  for (let i = 0; i < frameCount; i++) {
+  let currentIndex = 0;
+  const CONCURRENCY = 15; // Max simultaneous network requests
+
+  const loadNext = () => {
+    if (currentIndex >= frameCount) return;
+
+    const idx = currentIndex++;
     const img = new Image();
-    img.onload = checkComplete;
-    img.onerror = checkComplete;
-    img.src = currentFrame(i);
-    images.push(img);
+
+    img.onload = () => {
+      checkComplete();
+      loadNext(); // Fetch the next one in the queue
+    };
+
+    img.onerror = () => {
+      checkComplete();
+      loadNext(); // Even if it errors, continue queue
+    };
+
+    img.src = currentFrame(idx);
+    images[idx] = img; // Assign at correct index
+  };
+
+  try {
+    // Kick off the concurrent loader threads
+    for (let i = 0; i < CONCURRENCY && i < frameCount; i++) {
+        loadNext();
+    }
+  } catch (err) {
+    if (loaderText) { loaderText.textContent = `Catch Error: ${err.message}`; loaderText.style.color = "red"; }
   }
 };
 
