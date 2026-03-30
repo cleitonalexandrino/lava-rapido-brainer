@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAVA RAPIDO BRAINER | Premium Detailing</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div id="loader">
+        <div class="loader-content">
+            <div class="loader-logo">LAVA RAPIDO BRAINER</div>
+            <div class="loader-bar-bg">
+                <div id="loader-bar"></div>
+            </div>
+            <div id="loader-text">Loading Experience 0%</div>
+        </div>
+    </div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">LAVA RAPIDO BRAINER</div>
+            <div class="nav-links">
+                <a href="#processo">O Processo</a>
+                <a href="#tecnologia">Tecnologia</a>
+                <a href="#interior">Interior</a>
+                <a href="#agendar">Agendar</a>
+            </div>
+            <div class="nav-cta">
+                <button class="cta-button">Agendar Transformação</button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section id="storytelling-container">
+            <div class="canvas-sticky">
+                <canvas id="hero-canvas"></canvas>
+            </div>
+
+            <!-- Scroll Sections (Overlays) -->
+            <section class="step" id="step-hero">
+                <div class="content-center">
+                    <h1 class="headline">Até o carro dos seus sonhos perde o encanto com a sujeira certa.</h1>
+                    <p class="subheadline">Devolva o brilho que ele merece.</p>
+                    <button class="cta-secondary">Começar a Jornada de Brilho</button>
+                </div>
+            </section>
+
+            <section class="step" id="step-process">
+                <div class="content-left">
+                    <h2 class="section-title">A Arte da Renovação Profunda.</h2>
+                    <p class="copy">Cada fase foi projetada para desempenho máximo de limpeza.</p>
+                    <p class="copy highlight">Descontaminação total para reativar a potência visual da pintura.</p>
+                </div>
+            </section>
+
+            <section class="step" id="step-performance">
+                <div class="content-right">
+                    <h2 class="section-title">Tecnologia de Proteção que se Adapta.</h2>
+                    <ul class="bullet-list">
+                        <li>Brilho hidrofóbico duradouro</li>
+                        <li>Proteção UV avançada</li>
+                        <li>Resposta de cor instantânea</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="step" id="step-interior">
+                <div class="content-center">
+                    <h2 class="section-title">Conforto que você merece, por dentro e por fora.</h2>
+                    <p class="copy">Revitalização profunda de couros e tecidos.</p>
+                    <p class="copy">A sensação de carro novo a cada entrada.</p>
+                </div>
+            </section>
+
+            <section class="step" id="step-final">
+                <div class="content-center">
+                    <div class="button-group">
+                        <button id="view-packages-btn" class="cta-button">Ver Nossos Pacotes</button>
+                        <button class="cta-outline">Agendar Transformação</button>
+                    </div>
+                </div>
+            </section>
+
+        </section>
+    </main>
+
+    <div id="booking-modal" class="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div class="booking-header">
+                <h2>Agendar Sua Transformação</h2>
+                <p>Selecione a data e o horário para o tratamento premium.</p>
+            </div>
+            <div class="booking-body">
+                <div class="booking-form-fields">
+                    <div class="input-group">
+                        <label for="owner-name">Nome ou Apelido</label>
+                        <input type="text" id="owner-name" placeholder="Como podemos te chamar?">
+                    </div>
+                    <div class="input-group">
+                        <label for="car-model">Modelo do Carro</label>
+                        <input type="text" id="car-model" placeholder="Ex: McLaren Artura, BMW M3...">
+                    </div>
+                    <div class="input-group">
+                        <label for="car-color">Cor da Máquina</label>
+                        <input type="text" id="car-color" placeholder="Ex: Verde Mantis, Preto Obsidiana...">
+                    </div>
+                </div>
+                <div class="calendar-section">
+                    <div class="calendar-header">
+                        <button id="prev-month">&lsaquo;</button>
+                        <h3 id="current-month-year">Março 2026</h3>
+                        <button id="next-month">&rsaquo;</button>
+                    </div>
+                    <div class="calendar-grid-header">
+                        <span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
+                    </div>
+                    <div id="calendar-days" class="calendar-days">
+                        <!-- Days injected by JS -->
+                    </div>
+                </div>
+                <div class="time-section">
+                    <h3>Horários Disponíveis</h3>
+                    <div id="time-slots" class="time-slots">
+                        <!-- Time slots injected by JS -->
+                    </div>
+                </div>
+            </div>
+            <div class="booking-footer">
+                <div class="selected-summary">
+                    <span id="selected-date-text">Nenhuma data selecionada</span>
+                    <span id="selected-time-text"></span>
+                </div>
+                <button id="confirm-booking" class="cta-button" disabled>Confirmar Agendamento</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="packages-modal" class="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content packages-content">
+            <button class="modal-close">&times;</button>
+            <div class="booking-header">
+                <h2>Nossos Pacotes</h2>
+                <p>Escolha o tratamento ideal para o seu veículo.</p>
+            </div>
+            <div class="packages-grid">
+                <!-- MOTO -->
+                <div class="package-card">
+                    <div class="package-icon">🏍️</div>
+                    <h3 class="package-name">MOTO</h3>
+                    <div class="package-price">
+                        <span class="currency">R$</span>
+                        <span class="amount">14</span>
+                        <span class="decimal">,99</span>
+                    </div>
+                    <p class="price-suffix">a partir</p>
+                    <button class="cta-button select-package" data-package="Moto">Selecionar</button>
+                </div>
+
+                <!-- LAVAGEM SIMPLES -->
+                <div class="package-card featured">
+                    <div class="package-icon">🚗</div>
+                    <h3 class="package-name">LAVAGEM SIMPLES</h3>
+                    <div class="package-price">
+                        <span class="currency">R$</span>
+                        <span class="amount">14</span>
+                        <span class="decimal">,99</span>
+                    </div>
+                    <p class="price-suffix">a partir</p>
+                    <button class="cta-button select-package" data-package="Lavagem Simples">Selecionar</button>
+                </div>
+
+                <!-- LAVAGEM COMPLETA -->
+                <div class="package-card">
+                    <div class="package-icon">✨</div>
+                    <h3 class="package-name">LAVAGEM COMPLETA</h3>
+                    <div class="package-price">
+                        <span class="currency">R$</span>
+                        <span class="amount">34</span>
+                        <span class="decimal">,99</span>
+                    </div>
+                    <p class="price-suffix">a partir</p>
+                    <button class="cta-button select-package" data-package="Lavagem Completa">Selecionar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="premium-footer">
+        <div class="footer-container">
+            <div class="footer-branding">
+                <span class="footer-logo">LAVA RAPIDO BRAINER</span>
+                <p>Estética automotiva de alta performance.</p>
+                <div class="footer-address">
+                    <p>Rua Professor Adhemar Antônio Prado, 30</p>
+                    <p>Jardim Tiete, São Paulo - SP, 03945-010</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Rua+Professor+Adhemar+Antônio+Prado,+30+-+Jardim+Tiete,+São+Paulo+-+SP,+03945-010" target="_blank" class="maps-link">Ver no Google Maps</a>
+                </div>
+            </div>
+            <div class="footer-hours">
+                <h3>Horários de Operação</h3>
+                <div class="footer-hours-grid">
+                    <div class="footer-hours-item">
+                        <span class="day">Seg - Sex</span>
+                        <span class="time">09:00 — 18:00</span>
+                    </div>
+                    <div class="footer-hours-item">
+                        <span class="day">Sábado</span>
+                        <span class="time">09:00 — 17:00</span>
+                    </div>
+                </div>
+                <div class="footer-status">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Não operamos aos domingos</span>
+                </div>
+            </div>
+            <div class="footer-legal">
+                <span>&copy; 2026 LAVA RAPIDO BRAINER. Todos os direitos reservados.</span>
+                <span class="premium-tag">PREMIUM DETAIL</span>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="./main.js"></script>
+</body>
+</html>
