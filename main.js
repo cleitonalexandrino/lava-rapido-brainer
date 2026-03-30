@@ -178,11 +178,11 @@ const closeModal = () => {
 
 // Target specifically booking buttons
 openBtns.forEach(btn => {
-    if (btn.innerText.includes('Agendar Transformação')) {
-        btn.onclick = (e) => {
+    if (btn.textContent.toLowerCase().includes('agendar') || btn.innerText.toLowerCase().includes('agendar')) {
+        btn.addEventListener('click', (e) => {
             e.preventDefault();
             openModal();
-        };
+        });
     }
 });
 
