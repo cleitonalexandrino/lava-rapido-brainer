@@ -6,9 +6,20 @@ gsap.registerPlugin(ScrollTrigger);
 const canvas = document.getElementById('hero-canvas');
 const context = canvas.getContext('2d');
 
-// Configure Canvas
-canvas.width = 1920;
-canvas.height = 1080;
+// Configure Canvas for High-DPI (Retina) Resolution
+const resizeCanvas = () => {
+  const dpr = window.devicePixelRatio || 1;
+  // Match the canvas visual size to the window
+  canvas.style.width = window.innerWidth + 'px';
+  canvas.style.height = window.innerHeight + 'px';
+  // Set actual internal resolution to match screen pixels
+  canvas.width = window.innerWidth * dpr;
+  canvas.height = window.innerHeight * dpr;
+  if(images.length > 0) render(); // Re-render if images are loaded
+};
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
 
 const frameCount = 241;
 const currentFrame = (index) => (
@@ -62,9 +73,15 @@ const render = () => {
   if (img) {
     const hRatio = canvas.width / img.width;
     const vRatio = canvas.height / img.height;
-    const ratio = Math.max(hRatio, vRatio);
+    const ratio = Math.max(hRatio, vRatio); // Use "cover" conceptually
+    
     const centerShift_x = (canvas.width - img.width * ratio) / 2;
     const centerShift_y = (canvas.height - img.height * ratio) / 2;
+    
+    // Enforce high-quality scaling on Context
+    context.imageSmoothingEnabled = true;
+    context.imageSmoothingQuality = 'high';
+    
     context.drawImage(img, 0, 0, img.width, img.height,
       centerShift_x, centerShift_y, img.width * ratio, img.height * ratio);
   }
@@ -372,8 +389,5 @@ document.querySelectorAll('.select-package').forEach(btn => {
         }, 300);
     });
 });
-
-// Handle window resize
-window.addEventListener('resize', render);
 
 
