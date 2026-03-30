@@ -3,43 +3,48 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const canvas = document.getElementById('hero-canvas');
-const context = canvas.getContext('2d');
-
-// Configure Canvas for High-DPI (Retina) Resolution
-const resizeCanvas = () => {
-  const dpr = window.devicePixelRatio || 1;
-  // Match the canvas visual size to the window
-  canvas.style.width = window.innerWidth + 'px';
-  canvas.style.height = window.innerHeight + 'px';
-  // Set actual internal resolution to match screen pixels
-  canvas.width = window.innerWidth * dpr;
-  canvas.height = window.innerHeight * dpr;
-  if(images.length > 0) render(); // Re-render if images are loaded
-};
-
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
-const frameCount = 241;
-const currentFrame = (index) => (
-  // Using absolute path for Vercel deployment stability
-  `/ezgif-244810dde00f094f-jpg/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`
-);
-
-const images = [];
-const airpods = {
-  frame: 0
-};
-
-// Global error handler to catch silent initialization failures
+// Global error handler - move to top to catch any init errors
 window.addEventListener('error', (event) => {
+  console.error('Global Error caught:', event.message);
   const loaderText = document.getElementById('loader-text');
   if (loaderText) {
     loaderText.textContent = `Error: ${event.message}`;
     loaderText.style.color = "red";
   }
 });
+
+console.log('Lava Rapido Brainer JS Initializing...');
+
+const canvas = document.getElementById('hero-canvas');
+const context = canvas.getContext('2d');
+
+const frameCount = 241;
+const images = [];
+const airpods = {
+  frame: 0
+};
+
+const currentFrame = (index) => (
+  // Using absolute path for Vercel deployment stability
+  `/ezgif-244810dde00f094f-jpg/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`
+);
+
+// Configure Canvas for High-DPI (Retina) Resolution
+const resizeCanvas = () => {
+  const dpr = window.devicePixelRatio || 1;
+  // Match the canvas visual size to the window
+  if (canvas) {
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    // Set actual internal resolution to match screen pixels
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    if(images.length > 0 && images[0]) render(); // Re-render if images are loaded
+  }
+};
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
 
 // Preload Images with Progress
 const preloadImages = () => {
