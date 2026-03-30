@@ -27,30 +27,30 @@ const preloadImages = () => {
   const loaderText = document.getElementById('loader-text');
   const loader = document.getElementById('loader');
 
+  const checkComplete = () => {
+    loadedCount++;
+    const progress = Math.floor((loadedCount / frameCount) * 100);
+    if (loaderBar) loaderBar.style.width = `${progress}%`;
+    if (loaderText) loaderText.textContent = `Loading Experience ${progress}%`;
+
+    if (loadedCount === frameCount) {
+      // All loaded
+      gsap.to(loader, {
+        autoAlpha: 0,
+        duration: 1,
+        ease: "power2.inOut",
+        onComplete: () => {
+          loader.style.display = 'none';
+          render();
+        }
+      });
+    }
+  };
+
   for (let i = 0; i < frameCount; i++) {
     const img = new Image();
-    img.onload = () => {
-      loadedCount++;
-      const progress = Math.floor((loadedCount / frameCount) * 100);
-      if (loaderBar) loaderBar.style.width = `${progress}%`;
-      if (loaderText) loaderText.textContent = `Loading Experience ${progress}%`;
-
-      if (loadedCount === frameCount) {
-        // All loaded
-        gsap.to(loader, {
-          autoAlpha: 0,
-          duration: 1,
-          ease: "power2.inOut",
-          onComplete: () => {
-            loader.style.display = 'none';
-            render();
-          }
-        });
-      }
-    };
-    img.onerror = () => {
-        loadedCount++; // Count as loaded to avoid blocking
-    };
+    img.onload = checkComplete;
+    img.onerror = checkComplete;
     img.src = currentFrame(i);
     images.push(img);
   }
