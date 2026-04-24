@@ -1,7 +1,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { db } from './firebase-config.js';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, getDocs, query, where } from 'firebase/firestore';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -297,8 +297,8 @@ const renderCalendar = () => {
     }
 };
 
-const renderTimeSlots = () => {
-    timeSlotsContainer.innerHTML = "";
+const renderTimeSlots = async () => {
+    timeSlotsContainer.innerHTML = "<div style='grid-column: 1/-1; text-align:center; color: #86868b; font-size:12px;'>Carregando horários vagos...</div>";
     if (!selectedDate) return;
 
     let slots = [
@@ -314,10 +314,32 @@ const renderTimeSlots = () => {
         slots = slots.filter(time => {
             const startHour = parseInt(time.split(':')[0]);
             const startMin = parseInt(time.split(':')[1].split(' ')[0]);
-            // If it starts after 16:15 or ends after 17:00, it's out.
-            // 11th slot is 16:20 - 17:05, so we should stop at the 10th slot (15:30 - 16:15)
             return (startHour < 16) || (startHour === 16 && startMin < 20);
         });
+    }
+
+    // Buscando agendamentos existentes para esse dia
+    let bookedTimes = [];
+    try {
+        const q = query(collection(db, "bookings"), where("date", "==", selectedDate.toISOString()));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach(doc => {
+            if (doc.data().time) {
+                bookedTimes.push(doc.data().time);
+            }
+        });
+    } catch (error) {
+        console.error("Erro ao buscar horários vagos:", error);
+    }
+    
+    // Tira as horas que já estão marcadas no banco
+    slots = slots.filter(time => !bookedTimes.includes(time));
+
+    timeSlotsContainer.innerHTML = "";
+    
+    if (slots.length === 0) {
+        timeSlotsContainer.innerHTML = "<div style='grid-column: 1/-1; text-align:center; color: #ff3b30; font-size:14px; margin-top:20px;'>Agenda lotada para este dia!</div>";
+        return;
     }
 
     slots.forEach(time => {
