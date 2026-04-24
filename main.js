@@ -1,5 +1,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { db } from './firebase-config.js';
+import { collection, addDoc } from 'firebase/firestore';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -359,7 +361,7 @@ nextMonthBtn.addEventListener('click', () => {
     renderCalendar();
 });
 
-confirmBtn.addEventListener('click', () => {
+confirmBtn.addEventListener('click', async () => {
     const owner = document.getElementById('owner-name').value;
     const model = document.getElementById('car-model').value;
     const color = document.getElementById('car-color').value;
@@ -371,7 +373,6 @@ confirmBtn.addEventListener('click', () => {
     }
 
     const booking = {
-        id: Date.now(),
         date: selectedDate.toISOString(),
         time: selectedTime,
         package: packageName,
@@ -382,19 +383,30 @@ confirmBtn.addEventListener('click', () => {
         timestamp: new Date().toISOString()
     };
 
-    // Save to localStorage
-    const saved = JSON.parse(localStorage.getItem('brainers_bookings') || '[]');
-    saved.push(booking);
-    localStorage.setItem('brainers_bookings', JSON.stringify(saved));
+    try {
+        const originalText = confirmBtn.textContent;
+        confirmBtn.textContent = 'Aguarde...';
+        confirmBtn.disabled = true;
 
-    alert(`Sucesso! Transformação Agendada para ${owner}.\n${model} (${color})\nData: ${selectedDateText.textContent}\nHorário: ${selectedTime}`);
-    
-    // Clear fields
-    document.getElementById('owner-name').value = '';
-    document.getElementById('car-model').value = '';
-    document.getElementById('car-color').value = '';
-    
-    closeModal();
+        // Save to Firebase
+        await addDoc(collection(db, "bookings"), booking);
+        
+        confirmBtn.textContent = originalText;
+
+        alert(`Sucesso! Transformação Agendada para ${owner}.\n${model} (${color})\nData: ${selectedDateText.textContent}\nHorário: ${selectedTime}`);
+        
+        // Clear fields
+        document.getElementById('owner-name').value = '';
+        document.getElementById('car-model').value = '';
+        document.getElementById('car-color').value = '';
+        
+        closeModal();
+    } catch (error) {
+        console.error("Erro ao salvar agendamento:", error);
+        alert("Ocorreu um erro ao salvar seu agendamento. Tente novamente.");
+        confirmBtn.textContent = 'Confirmar Agendamento';
+        confirmBtn.disabled = false;
+    }
 });
 
 // PACKAGES MODAL LOGIC

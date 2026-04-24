@@ -1,4 +1,6 @@
-// admin.js
+import { db } from './firebase-config.js';
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+
 const tbody = document.getElementById('admin-tbody');
 const kpiCarsToday = document.getElementById('kpi-cars-today');
 const kpiRevToday = document.getElementById('kpi-rev-today');
@@ -6,22 +8,18 @@ const kpiCarsComp = document.getElementById('kpi-cars-comp');
 const kpiRevComp = document.getElementById('kpi-rev-comp');
 const kpiAvg = document.getElementById('kpi-avg');
 
-const loadDashboard = () => {
-    let bookings = JSON.parse(localStorage.getItem('brainers_bookings') || '[]');
-    
-    // Seed mock data if empty for demo purposes
-    if (bookings.length === 0) {
-        const today = new Date();
-        const lastWeek = new Date();
-        lastWeek.setDate(today.getDate() - 7);
-
-        const mockData = [
-            { id: 101, owner: 'Carlos Alberto', model: 'Porsche 911', color: 'Cinza Giz', package: 'Lavagem Completa', date: today.toISOString(), time: '10:00', value: 34.99, timestamp: today.toISOString() },
-            { id: 102, owner: 'Marina Silva', model: 'Audi Q5', color: 'Branco', package: 'Lavagem Simples', date: today.toISOString(), time: '14:00', value: 14.99, timestamp: today.toISOString() },
-            { id: 103, owner: 'João Pedro', model: 'Mustang GT', color: 'Azul', package: 'Lavagem Completa', date: lastWeek.toISOString(), time: '09:00', value: 34.99, timestamp: lastWeek.toISOString() }
-        ];
-        bookings = mockData;
-        localStorage.setItem('brainers_bookings', JSON.stringify(mockData));
+const loadDashboard = async () => {
+    let bookings = [];
+    try {
+        const q = query(collection(db, "bookings"), orderBy("timestamp", "desc"));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            let data = doc.data();
+            // Provide a fallback ID for sorting if timestamp is not sufficient
+            bookings.push({ id: doc.id, ...data });
+        });
+    } catch (error) {
+        console.error("Erro ao buscar agendamentos do banco:", error);
     }
 
     const today = new Date();
@@ -66,9 +64,8 @@ const loadDashboard = () => {
 
     // Populate Table (Most Recent First)
     tbody.innerHTML = '';
-    const sorted = [...bookings].sort((a,b) => b.id - a.id);
     
-    sorted.slice(0, 10).forEach(b => {
+    bookings.slice(0, 10).forEach(b => {
         const row = document.createElement('tr');
         const formattedDate = new Date(b.date).toLocaleDateString('pt-BR');
         
