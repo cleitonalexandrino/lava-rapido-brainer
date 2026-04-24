@@ -982,7 +982,7 @@ body {
         /* Disable fixed attachment on mobile as it causes issues and conflicts with contain */
         background-attachment: scroll;
         /* Reduce min-height so we don't have massive empty black space below the contained car */
-        min-height: 45vh;
+        min-height: 25vh;
         margin-top: var(--nav-height); /* Ensure it starts below nav */
     }
 }
