@@ -946,7 +946,42 @@ body {
     }
     .packages-content {
         padding: 40px 20px;
-        overflow-y: auto;
     }
 }
 
+/* HERO BANNER STYLES */
+#hero-banner {
+    background-image: url('/ferrari.webp');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 80vh;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 40px;
+}
+
+.hero-gradient {
+    background: linear-gradient(to top, rgba(5,5,5,1) 0%, rgba(5,5,5,0) 100%);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+}
+
+@media (max-width: 768px) {
+    #hero-banner {
+        /* On mobile, show the entire car horizontally */
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center top;
+        /* Disable fixed attachment on mobile as it causes issues and conflicts with contain */
+        background-attachment: scroll;
+        /* Reduce min-height so we don't have massive empty black space below the contained car */
+        min-height: 45vh;
+        margin-top: var(--nav-height); /* Ensure it starts below nav */
+    }
+}
