@@ -250,43 +250,27 @@ confirmBtn.addEventListener('click', async () => {
     }
 });
 
-// PACKAGES MODAL LOGIC
-const packagesModal = document.getElementById('packages-modal');
-const packagesCloseBtn = packagesModal.querySelector('.modal-close');
-const packagesBackdrop = packagesModal.querySelector('.modal-backdrop');
+// SCROLL TO PACKAGES LOGIC
 const viewPackagesBtn = document.getElementById('view-packages-btn');
 
-const openPackagesModal = (e) => {
-    if (e) e.preventDefault();
-    packagesModal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-};
-
-const closePackagesModal = () => {
-    packagesModal.classList.remove('active');
-    document.body.style.overflow = '';
-};
-
 if (viewPackagesBtn) {
-    viewPackagesBtn.addEventListener('click', openPackagesModal);
+    viewPackagesBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const packagesSection = document.getElementById('packages-section');
+        if (packagesSection) {
+            packagesSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
 }
-
-packagesCloseBtn.addEventListener('click', closePackagesModal);
-packagesBackdrop.addEventListener('click', closePackagesModal);
 
 // Select package and go to booking
 document.querySelectorAll('.select-package').forEach(btn => {
     btn.addEventListener('click', () => {
         const packageName = btn.getAttribute('data-package');
-        closePackagesModal();
         
-        // Slightly delay opening booking to allow for smooth transition
-        setTimeout(() => {
-            openModal();
-            // Update heading with package name
-            document.querySelector('.booking-header h2').textContent = `Agendar ${packageName}`;
-        }, 300);
+        openModal();
+        // Update heading with package name
+        document.querySelector('.booking-header h2').textContent = `Agendar ${packageName}`;
     });
 });
-
 

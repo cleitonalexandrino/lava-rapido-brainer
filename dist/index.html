@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LAVA RAPIDO BRAINER | Premium Detailing</title>
-  <script type="module" crossorigin src="/assets/main-B3FpwbnY.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/firebase-config-CbK81ltM.js">
-  <link rel="stylesheet" crossorigin href="/assets/firebase-config-i5AMl50A.css">
+  <script type="module" crossorigin src="/assets/main-DlWsNcR4.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/firebase-config-Bz55sDI6.js">
+  <link rel="stylesheet" crossorigin href="/assets/firebase-config-CEOKlXgl.css">
 </head>
 <body>
 
@@ -24,21 +24,80 @@
     </nav>
 
     <main>
-        <section id="hero-section" style="background-image: url('/ferrari.webp'); background-size: cover; background-position: center; background-attachment: fixed; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 100px 20px;">
-            <div class="hero-card" style="background: rgba(0,0,0,0.65); padding: 40px 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(12px); max-width: 800px; width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; margin: 0 auto;">
-                <img src="./logo.png" alt="LAVA RAPIDO BRAINER Logo" style="max-width: 150px; margin-bottom: 20px; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
-                <h1 class="headline" style="font-size: clamp(1.8rem, 5vw, 2.2rem); margin-bottom: 15px; width: 100%;">O FOCO É O TRAMPO</h1>
-                <p class="subheadline" style="font-size: clamp(1.1rem, 4vw, 1.3rem); margin-bottom: 10px; color: #fff; width: 100%;">Lavagens simples e completa</p>
-                <p class="subheadline" style="font-size: clamp(0.9rem, 3.5vw, 1.1rem); margin-bottom: 20px; color: #ddd; width: 100%;">Segunda a Sabado 9h as 18h</p>
-                <p class="subheadline" style="font-size: clamp(0.85rem, 3vw, 1rem); color: #bbb; line-height: 1.5; margin-bottom: 15px; max-width: 600px; width: 100%;">
-                    Para melhor atender por favor realizar agendamento e comparecer ao endereço abaixo com 05 min. de antecedencia !
+        <!-- Section 1: Hero (Ferrari Image) -->
+        <section id="hero-banner" style="background-image: url('/ferrari.webp'); background-size: cover; background-position: center; background-attachment: fixed; min-height: 80vh; position: relative; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 40px;">
+            <div style="background: linear-gradient(to top, rgba(5,5,5,1) 0%, rgba(5,5,5,0) 100%); position: absolute; bottom: 0; left: 0; width: 100%; height: 30%;"></div>
+        </section>
+
+        <!-- Section 2: About (Logo & Descriptives) -->
+        <section id="about" style="padding: 60px 20px; text-align: center; max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center;">
+            <img src="./logo.png" alt="LAVA RAPIDO BRAINER Logo" style="max-width: 150px; margin-bottom: 30px; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+            <h1 class="headline" style="font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 20px; width: 100%;">🧽🚿 O FOCO É O TRAMPO 🏁</h1>
+            <p class="subheadline" style="font-size: clamp(1.2rem, 4vw, 1.5rem); margin-bottom: 10px; color: #fff; width: 100%;">🏍️🏎️🚚 Lavagens simples e completa</p>
+        </section>
+
+        <!-- Section 3: Info (Hours & Address) -->
+        <section id="info" style="padding: 40px 20px 80px; text-align: center; max-width: 800px; margin: 0 auto;">
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 40px 20px;">
+                <p class="subheadline" style="font-size: clamp(1rem, 3.5vw, 1.2rem); margin-bottom: 20px; color: #ddd; width: 100%;">⌚ Segunda a Sabado 9h as 18h</p>
+                <p class="subheadline" style="font-size: clamp(0.9rem, 3vw, 1rem); color: #bbb; line-height: 1.6; margin-bottom: 20px; margin-left: auto; margin-right: auto; max-width: 600px; width: 100%;">
+                    Para melhor atender por favor realizar agendamento e comparecer ao endereço abaixo com 05 min. de antecedencia!
                 </p>
-                <p class="subheadline" style="font-size: clamp(0.85rem, 3vw, 1rem); color: #bbb; font-weight: bold; margin-bottom: 30px; width: 100%;">
-                    Rua Professor Adhemar Antônio Prado n 30, São Paulo, Brazil 03945-010
+                <p class="subheadline" style="font-size: clamp(0.9rem, 3vw, 1rem); color: var(--accent); font-weight: bold; margin-bottom: 0; width: 100%;">
+                    📍 Rua Professor Adhemar Antônio Prado n 30, São Paulo, Brazil 03945-010
                 </p>
-                <div class="button-group" style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; width: 100%;">
-                    <button class="cta-outline">Agendar Transformação</button>
-                    <button id="view-packages-btn" class="cta-button" style="padding: 14px 28px; font-size: 16px;">Ver Nossos Pacotes</button>
+            </div>
+            <div class="button-group" style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; width: 100%; margin-top: 40px;">
+                <button class="cta-outline open-booking-btn">Agendar Transformação</button>
+                <button id="view-packages-btn" class="cta-button" style="padding: 14px 28px; font-size: 16px;">Ver Nossos Pacotes</button>
+            </div>
+        </section>
+
+        <!-- Section 4: Packages -->
+        <section id="packages-section" style="padding: 80px 20px; background-color: #0a0a0a; border-top: 1px solid rgba(255,255,255,0.05);">
+            <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+                <h2 style="font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 10px;">Nossos Pacotes</h2>
+                <p style="color: #86868b; font-size: 1.1rem; margin-bottom: 40px;">Escolha o tratamento ideal para o seu veículo.</p>
+                
+                <div class="packages-grid">
+                    <!-- MOTO -->
+                    <div class="package-card">
+                        <div class="package-icon">🏍️</div>
+                        <h3 class="package-name">MOTO</h3>
+                        <div class="package-price">
+                            <span class="currency">R$</span>
+                            <span class="amount">14</span>
+                            <span class="decimal">,99</span>
+                        </div>
+                        <p class="price-suffix">a partir</p>
+                        <button class="cta-button select-package" data-package="Moto">Selecionar</button>
+                    </div>
+
+                    <!-- LAVAGEM SIMPLES -->
+                    <div class="package-card featured">
+                        <div class="package-icon">🚗</div>
+                        <h3 class="package-name">LAVAGEM SIMPLES</h3>
+                        <div class="package-price">
+                            <span class="currency">R$</span>
+                            <span class="amount">14</span>
+                            <span class="decimal">,99</span>
+                        </div>
+                        <p class="price-suffix">a partir</p>
+                        <button class="cta-button select-package" data-package="Lavagem Simples">Selecionar</button>
+                    </div>
+
+                    <!-- LAVAGEM COMPLETA -->
+                    <div class="package-card">
+                        <div class="package-icon">✨</div>
+                        <h3 class="package-name">LAVAGEM COMPLETA</h3>
+                        <div class="package-price">
+                            <span class="currency">R$</span>
+                            <span class="amount">34</span>
+                            <span class="decimal">,99</span>
+                        </div>
+                        <p class="price-suffix">a partir</p>
+                        <button class="cta-button select-package" data-package="Lavagem Completa">Selecionar</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -93,57 +152,6 @@
                     <span id="selected-time-text"></span>
                 </div>
                 <button id="confirm-booking" class="cta-button" disabled>Confirmar Agendamento</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="packages-modal" class="modal">
-        <div class="modal-backdrop"></div>
-        <div class="modal-content packages-content">
-            <button class="modal-close">&times;</button>
-            <div class="booking-header">
-                <h2>Nossos Pacotes</h2>
-                <p>Escolha o tratamento ideal para o seu veículo.</p>
-            </div>
-            <div class="packages-grid">
-                <!-- MOTO -->
-                <div class="package-card">
-                    <div class="package-icon">🏍️</div>
-                    <h3 class="package-name">MOTO</h3>
-                    <div class="package-price">
-                        <span class="currency">R$</span>
-                        <span class="amount">14</span>
-                        <span class="decimal">,99</span>
-                    </div>
-                    <p class="price-suffix">a partir</p>
-                    <button class="cta-button select-package" data-package="Moto">Selecionar</button>
-                </div>
-
-                <!-- LAVAGEM SIMPLES -->
-                <div class="package-card featured">
-                    <div class="package-icon">🚗</div>
-                    <h3 class="package-name">LAVAGEM SIMPLES</h3>
-                    <div class="package-price">
-                        <span class="currency">R$</span>
-                        <span class="amount">14</span>
-                        <span class="decimal">,99</span>
-                    </div>
-                    <p class="price-suffix">a partir</p>
-                    <button class="cta-button select-package" data-package="Lavagem Simples">Selecionar</button>
-                </div>
-
-                <!-- LAVAGEM COMPLETA -->
-                <div class="package-card">
-                    <div class="package-icon">✨</div>
-                    <h3 class="package-name">LAVAGEM COMPLETA</h3>
-                    <div class="package-price">
-                        <span class="currency">R$</span>
-                        <span class="amount">34</span>
-                        <span class="decimal">,99</span>
-                    </div>
-                    <p class="price-suffix">a partir</p>
-                    <button class="cta-button select-package" data-package="Lavagem Completa">Selecionar</button>
-                </div>
             </div>
         </div>
     </div>
