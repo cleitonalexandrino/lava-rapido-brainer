@@ -1,5 +1,5 @@
 import { db } from './firebase-config.js';
-import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy, doc, deleteDoc } from 'firebase/firestore';
 
 const tbody = document.getElementById('admin-tbody');
 const kpiCarsToday = document.getElementById('kpi-cars-today');
@@ -77,8 +77,27 @@ const loadDashboard = async () => {
             <td>${b.time}</td>
             <td>${formattedDate}</td>
             <td><span class="status-badge">Confirmado</span></td>
+            <td><button class="btn-delete" data-id="${b.id}">Cancelar</button></td>
         `;
         tbody.appendChild(row);
+    });
+
+    // Eventos dos botões de exclusão
+    document.querySelectorAll('.btn-delete').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            const id = e.target.getAttribute('data-id');
+            if (confirm("Tem certeza que deseja cancelar p agendamento? O horário ficará vago novamente para novos clientes.")) {
+                try {
+                    e.target.textContent = "Apagando...";
+                    await deleteDoc(doc(db, "bookings", id));
+                    loadDashboard(); // Recarrega os dados do banco imediatamente
+                } catch (error) {
+                    console.error("Erro ao deletar:", error);
+                    alert("Erro ao excluir. Tente novamente.");
+                    e.target.textContent = "Cancelar";
+                }
+            }
+        });
     });
 };
 
