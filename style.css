@@ -951,7 +951,7 @@ body {
 
 /* HERO BANNER STYLES */
 #hero-banner {
-    background-image: url('/ferrari.webp');
+    background-image: url('/ferrari.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
