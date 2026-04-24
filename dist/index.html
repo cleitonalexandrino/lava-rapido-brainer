@@ -4,21 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LAVA RAPIDO BRAINER | Premium Detailing</title>
-  <script type="module" crossorigin src="/assets/main-B_UWEwci.js"></script>
+  <script type="module" crossorigin src="/assets/main-B3FpwbnY.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/firebase-config-CbK81ltM.js">
   <link rel="stylesheet" crossorigin href="/assets/firebase-config-i5AMl50A.css">
 </head>
 <body>
-    <div id="loader">
-        <div class="loader-content" style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
-            <img src="./logo.png" alt="LAVA RAPIDO BRAINER Logo" style="max-width: 120px; border-radius: 50%; margin-bottom: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
-            <div class="loader-logo">LAVA RAPIDO BRAINER</div>
-            <div class="loader-bar-bg">
-                <div id="loader-bar"></div>
-            </div>
-            <div id="loader-text">Loading Experience 0%</div>
-        </div>
-    </div>
+
 
     <nav id="navbar">
         <div class="nav-container">
@@ -33,46 +24,23 @@
     </nav>
 
     <main>
-        <section id="storytelling-container">
-            <div class="canvas-sticky">
-                <canvas id="hero-canvas"></canvas>
+        <section id="hero-section" style="background-image: url('/ferrari.webp'); background-size: cover; background-position: center; background-attachment: fixed; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 100px 20px;">
+            <div class="content-center" style="background: rgba(0,0,0,0.65); padding: 40px 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(12px); max-width: 800px; width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; opacity: 1; visibility: visible; transform: none; margin: 0 auto;">
+                <img src="./logo.png" alt="LAVA RAPIDO BRAINER Logo" style="max-width: 150px; margin-bottom: 20px; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+                <h1 class="headline" style="font-size: clamp(1.8rem, 5vw, 2.2rem); margin-bottom: 15px; width: 100%;">O FOCO É O TRAMPO</h1>
+                <p class="subheadline" style="font-size: clamp(1.1rem, 4vw, 1.3rem); margin-bottom: 10px; color: #fff; width: 100%;">Lavagens simples e completa</p>
+                <p class="subheadline" style="font-size: clamp(0.9rem, 3.5vw, 1.1rem); margin-bottom: 20px; color: #ddd; width: 100%;">Segunda a Sabado 9h as 18h</p>
+                <p class="subheadline" style="font-size: clamp(0.85rem, 3vw, 1rem); color: #bbb; line-height: 1.5; margin-bottom: 15px; max-width: 600px; width: 100%;">
+                    Para melhor atender por favor realizar agendamento e comparecer ao endereço abaixo com 05 min. de antecedencia !
+                </p>
+                <p class="subheadline" style="font-size: clamp(0.85rem, 3vw, 1rem); color: #bbb; font-weight: bold; margin-bottom: 30px; width: 100%;">
+                    Rua Professor Adhemar Antônio Prado n 30, São Paulo, Brazil 03945-010
+                </p>
+                <div class="button-group" style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; width: 100%;">
+                    <button class="cta-outline">Agendar Transformação</button>
+                    <button id="view-packages-btn" class="cta-button" style="padding: 14px 28px; font-size: 16px;">Ver Nossos Pacotes</button>
+                </div>
             </div>
-
-            <!-- Scroll Sections (Overlays) -->
-            <section class="step" id="step-hero">
-                <div class="content-center" style="background: rgba(0,0,0,0.6); padding: 30px 15px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <img src="./logo.png" alt="LAVA RAPIDO BRAINER Logo" style="max-width: 150px; margin-bottom: 20px; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
-                    <h1 class="headline" style="font-size: clamp(1.8rem, 5vw, 2.2rem); margin-bottom: 15px; width: 100%;">O FOCO É O TRAMPO</h1>
-                    <p class="subheadline" style="font-size: clamp(1.1rem, 4vw, 1.3rem); margin-bottom: 10px; color: #fff; width: 100%;">Lavagens simples e completa</p>
-                    <p class="subheadline" style="font-size: clamp(0.9rem, 3.5vw, 1.1rem); margin-bottom: 20px; color: #ddd; width: 100%;">Segunda a Sabado 9h as 18h</p>
-                    <p class="subheadline" style="font-size: clamp(0.85rem, 3vw, 1rem); color: #bbb; line-height: 1.5; margin-bottom: 15px; max-width: 600px; width: 100%;">
-                        Para melhor atender por favor realizar agendamento e comparecer ao endereço abaixo com 05 min. de antecedencia !
-                    </p>
-                    <p class="subheadline" style="font-size: clamp(0.85rem, 3vw, 1rem); color: #bbb; font-weight: bold; margin-bottom: 30px; width: 100%;">
-                        Rua Professor Adhemar Antônio Prado n 30, São Paulo, Brazil 03945-010
-                    </p>
-                    <button class="cta-secondary">Começar a Jornada de Brilho</button>
-                </div>
-            </section>
-
-            <section class="step" id="step-process">
-            </section>
-
-            <section class="step" id="step-performance">
-            </section>
-
-            <section class="step" id="step-interior">
-            </section>
-
-            <section class="step" id="step-final">
-                <div class="content-center">
-                    <div class="button-group">
-                        <button id="view-packages-btn" class="cta-button">Ver Nossos Pacotes</button>
-                        <button class="cta-outline">Agendar Transformação</button>
-                    </div>
-                </div>
-            </section>
-
         </section>
     </main>
 
