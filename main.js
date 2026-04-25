@@ -29,7 +29,7 @@ ScrollTrigger.create({
 const modal = document.getElementById('booking-modal');
 const closeBtn = document.querySelector('.modal-close');
 const backdrop = document.querySelector('.modal-backdrop');
-const openBtns = document.querySelectorAll('.cta-button, .cta-outline, .nav-cta .cta-button'); // Expanded selector
+const openBtns = document.querySelectorAll('.open-booking-btn, .cta-button, .cta-outline');
 
 const calendarDays = document.getElementById('calendar-days');
 const currentMonthYearText = document.getElementById('current-month-year');
@@ -60,14 +60,12 @@ const closeModal = () => {
     document.body.style.overflow = '';
 };
 
-// Target specifically booking buttons
+// Open modal on any booking button click
 openBtns.forEach(btn => {
-    if (btn.textContent.toLowerCase().includes('agendar') || btn.innerText.toLowerCase().includes('agendar')) {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            openModal();
-        });
-    }
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openModal();
+    });
 });
 
 closeBtn.addEventListener('click', closeModal);
@@ -120,20 +118,19 @@ const renderTimeSlots = async () => {
     timeSlotsContainer.innerHTML = "<div style='grid-column: 1/-1; text-align:center; color: #86868b; font-size:12px;'>Carregando horários vagos...</div>";
     if (!selectedDate) return;
 
+    // Slots: 55min atendimento + 5min intervalo = 60min por slot, início às 08:00
     let slots = [
-        "08:00 - 08:45", "08:50 - 09:35", "09:40 - 10:25", 
-        "10:30 - 11:15", "11:20 - 12:05", "12:10 - 12:55",
-        "13:00 - 13:45", "13:50 - 14:35", "14:40 - 15:25",
-        "15:30 - 16:15", "16:20 - 17:05", "17:10 - 17:55",
-        "18:00 - 18:45"
+        "08:00 - 08:55", "09:00 - 09:55", "10:00 - 10:55",
+        "11:00 - 11:55", "12:00 - 12:55", "13:00 - 13:55",
+        "14:00 - 14:55", "15:00 - 15:55", "16:00 - 16:55",
+        "17:00 - 17:55"
     ];
 
     // Saturday logic: closes at 17h
     if (selectedDate.getDay() === 6) {
         slots = slots.filter(time => {
             const startHour = parseInt(time.split(':')[0]);
-            const startMin = parseInt(time.split(':')[1].split(' ')[0]);
-            return (startHour < 16) || (startHour === 16 && startMin < 20);
+            return startHour < 17;
         });
     }
 
