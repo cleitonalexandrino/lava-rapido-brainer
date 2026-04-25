@@ -3,63 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LAVA RAPIDO BRAINER | Premium Detailing</title>
+    <title>LAVA RAPIDO BRAINER | Premium Detailing em São Paulo</title>
+    <meta name="description" content="Lava Rápido Brainer — Estética automotiva de alta performance em São Paulo. Lavagem simples e completa. Agende pelo site.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
-
+    <!-- ===== NAVBAR ===== -->
     <nav id="navbar">
         <div class="nav-container">
-            <div class="nav-logo" style="display: flex; align-items: center;">
-                <img src="./logo.png" alt="Logo Lava Rapido Brainer" style="height: 40px; width: 40px; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.5);">
+            <div class="nav-logo">
+                <img src="./logo.png" alt="Logo Lava Rapido Brainer" id="nav-logo-img">
+                <span class="nav-brand-name">LAVA RAPIDO</span>
             </div>
-            <div class="nav-cta" style="display:flex; align-items:center; gap:20px;">
-                <a href="https://www.instagram.com/lava_rapido_do_brainer/" target="_blank" style="color: #000000; opacity: 0.8; transition: opacity 0.3s; display: flex; align-items: center;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'" aria-label="Instagram">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            <div class="nav-actions">
+                <a href="https://www.instagram.com/lava_rapido_do_brainer/" target="_blank" class="nav-icon-link" aria-label="Instagram">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                 </a>
-                <button class="cta-button">Agendar Transformação</button>
+                <button class="nav-cta-btn open-booking-btn">Agendar</button>
             </div>
         </div>
     </nav>
 
     <main>
-        <!-- Section 1: Hero (Ferrari Image) -->
+
+        <!-- ===== HERO ===== -->
         <section id="hero-banner">
             <div class="hero-gradient"></div>
         </section>
 
-        <!-- Section 2: About (Logo & Descriptives) -->
-        <section id="about" style="padding: 0 20px 0; text-align: center; max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center;">
-            <h1 class="headline" style="font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 10px; width: 100%;">Renove o visual do seu carro hoje mesmo</h1>
-        </section>
-
-        <!-- Section 3: Info (Hours & Address) -->
-        <section id="info" style="padding: 20px 20px 80px; text-align: center; max-width: 800px; margin: 0 auto;">
-            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 40px 20px;">
-                <p class="subheadline" style="font-size: clamp(1rem, 3.5vw, 1.2rem); margin-bottom: 20px; color: #ddd; width: 100%;">⌚ Segunda a Sabado 9h as 18h</p>
-                <p class="subheadline" style="font-size: clamp(0.9rem, 3vw, 1rem); color: #bbb; line-height: 1.6; margin-bottom: 20px; margin-left: auto; margin-right: auto; max-width: 600px; width: 100%;">
-                    Para melhor atender por favor realizar agendamento e comparecer ao endereço abaixo com 05 min. de antecedencia!
-                </p>
-                <div class="button-group" style="display: flex; justify-content: center; width: 100%; margin: 20px 0;">
-                    <button class="cta-outline open-booking-btn">Agendar Transformação</button>
-                </div>
-                <a href="https://www.google.com/maps/search/?api=1&query=Rua+Professor+Adhemar+Antônio+Prado+30+São+Paulo+Brazil+03945-010" target="_blank" style="text-decoration: none; display: block; padding-top: 10px;">
-                    <p class="subheadline" style="font-size: clamp(0.9rem, 3vw, 1rem); color: var(--accent); font-weight: bold; margin-bottom: 0; width: 100%; text-decoration: underline;">
-                        📍 Rua Professor Adhemar Antônio Prado n 30, São Paulo, Brazil 03945-010
-                    </p>
-                </a>
+        <!-- ===== HEADLINE ===== -->
+        <section id="headline-section">
+            <div class="section-inner">
+                <h1 class="display-title">Renove o visual<br>do seu carro hoje</h1>
+                <p class="display-sub">Estética automotiva de alta performance. Do hatch à superesportiva.</p>
+                <button class="btn-primary open-booking-btn">Agendar Transformação</button>
             </div>
         </section>
 
-        <!-- Section 4: Packages -->
-        <section id="packages-section" style="padding: 80px 20px; background-color: #0a0a0a; border-top: 1px solid rgba(255,255,255,0.05);">
-            <div style="max-width: 900px; margin: 0 auto; text-align: center;">
-                <h2 style="font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 10px;">Nossos Pacotes</h2>
-                <p style="color: #86868b; font-size: 1.1rem; margin-bottom: 40px;">Escolha o tratamento ideal para o seu veículo.</p>
-                
+        <!-- ===== INFO CARDS ===== -->
+        <section id="info-section">
+            <div class="section-inner">
+                <div class="info-grid">
+
+                    <div class="info-card">
+                        <div class="info-card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        </div>
+                        <div class="info-card-body">
+                            <h3 class="info-card-title">Horário de Atendimento</h3>
+                            <p class="info-card-text">Segunda a Sábado</p>
+                            <p class="info-card-highlight">9h às 18h</p>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        </div>
+                        <div class="info-card-body">
+                            <h3 class="info-card-title">Localização</h3>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Rua+Professor+Adhemar+Antônio+Prado+30+São+Paulo+Brazil+03945-010" target="_blank" class="info-card-link">
+                                Rua Prof. Adhemar Antônio Prado, 30<br>São Paulo — SP, 03945-010
+                                <span class="maps-badge">Ver no Maps ↗</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <div class="info-card-body">
+                            <h3 class="info-card-title">Agendamento</h3>
+                            <p class="info-card-text">Chegue 5 min. antes. Agendamento garante seu horário.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PACKAGES ===== -->
+        <section id="packages-section">
+            <div class="section-inner">
+                <div class="packages-header">
+                    <h2 class="section-title">Nossos Pacotes</h2>
+                    <p class="section-sub">Escolha o tratamento ideal para o seu veículo.</p>
+                </div>
+
                 <div class="packages-grid">
-                    <!-- MOTO -->
+
                     <div class="package-card">
                         <div class="package-icon">🏍️</div>
                         <h3 class="package-name">MOTO</h3>
@@ -69,11 +106,11 @@
                             <span class="decimal">,99</span>
                         </div>
                         <p class="price-suffix">a partir</p>
-                        <button class="cta-button select-package" data-package="Moto">Selecionar</button>
+                        <button class="btn-outline select-package" data-package="Moto">Selecionar</button>
                     </div>
 
-                    <!-- LAVAGEM SIMPLES -->
                     <div class="package-card featured">
+                        <div class="featured-label">MAIS POPULAR</div>
                         <div class="package-icon">🚗</div>
                         <h3 class="package-name">LAVAGEM SIMPLES</h3>
                         <div class="package-price">
@@ -82,10 +119,9 @@
                             <span class="decimal">,99</span>
                         </div>
                         <p class="price-suffix">a partir</p>
-                        <button class="cta-button select-package" data-package="Lavagem Simples">Selecionar</button>
+                        <button class="btn-primary select-package" data-package="Lavagem Simples">Selecionar</button>
                     </div>
 
-                    <!-- LAVAGEM COMPLETA -->
                     <div class="package-card">
                         <div class="package-icon">✨</div>
                         <h3 class="package-name">LAVAGEM COMPLETA</h3>
@@ -95,13 +131,16 @@
                             <span class="decimal">,99</span>
                         </div>
                         <p class="price-suffix">a partir</p>
-                        <button class="cta-button select-package" data-package="Lavagem Completa">Selecionar</button>
+                        <button class="btn-outline select-package" data-package="Lavagem Completa">Selecionar</button>
                     </div>
+
                 </div>
             </div>
         </section>
+
     </main>
 
+    <!-- ===== BOOKING MODAL ===== -->
     <div id="booking-modal" class="modal">
         <div class="modal-backdrop"></div>
         <div class="modal-content">
@@ -150,11 +189,12 @@
                     <span id="selected-date-text">Nenhuma data selecionada</span>
                     <span id="selected-time-text"></span>
                 </div>
-                <button id="confirm-booking" class="cta-button" disabled>Confirmar Agendamento</button>
+                <button id="confirm-booking" class="btn-primary" disabled>Confirmar Agendamento</button>
             </div>
         </div>
     </div>
 
+    <!-- ===== FOOTER ===== -->
     <footer id="premium-footer">
         <div class="footer-container">
             <div class="footer-branding">
