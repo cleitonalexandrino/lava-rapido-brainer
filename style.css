@@ -90,11 +90,18 @@ body {
 }
 
 #nav-logo-img {
-  height: 32px;
-  width: 32px;
-  border-radius: 0;
+  height: 36px;
+  width: 36px;
+  border-radius: 2px;
   object-fit: cover;
-  filter: grayscale(100%) contrast(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 2px;
+  background: #000;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  transition: border-color 0.3s;
+}
+#nav-logo-img:hover {
+  border-color: var(--accent);
 }
 
 .nav-brand-name {
