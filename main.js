@@ -200,13 +200,24 @@ nextMonthBtn.addEventListener('click', () => {
 });
 
 confirmBtn.addEventListener('click', async () => {
-    const owner = document.getElementById('owner-name').value;
-    const model = document.getElementById('car-model').value;
-    const color = document.getElementById('car-color').value;
-    const packageName = document.querySelector('.booking-header h2').textContent.replace('Agendar ', '');
+    const owner = document.getElementById('owner-name').value.trim();
+    const model = document.getElementById('car-model').value.trim();
+    const color = document.getElementById('car-color').value.trim();
+    const packageSelect = document.getElementById('booking-package');
+    const selectedOption = packageSelect.options[packageSelect.selectedIndex];
+    const packageName = selectedOption.value;
+    const packagePrice = parseFloat(selectedOption.getAttribute('data-price') || '14.99');
 
+    if (!packageName) {
+        alert('Por favor, selecione o tipo de lavagem.');
+        return;
+    }
     if (!owner || !model || !color) {
         alert('Por favor, preencha todos os dados do veículo.');
+        return;
+    }
+    if (!selectedDate || !selectedTime) {
+        alert('Por favor, selecione a data e o horário.');
         return;
     }
 
@@ -217,7 +228,7 @@ confirmBtn.addEventListener('click', async () => {
         owner,
         model,
         color,
-        value: packageName.includes('Completa') ? 34.99 : 14.99,
+        value: packagePrice,
         timestamp: new Date().toISOString()
     };
 
@@ -226,18 +237,19 @@ confirmBtn.addEventListener('click', async () => {
         confirmBtn.textContent = 'Aguarde...';
         confirmBtn.disabled = true;
 
-        // Save to Firebase
         await addDoc(collection(db, "bookings"), booking);
-        
+
         confirmBtn.textContent = originalText;
 
-        alert(`Sucesso! Transformação Agendada para ${owner}.\n${model} (${color})\nData: ${selectedDateText.textContent}\nHorário: ${selectedTime}`);
-        
+        const dateStr = selectedDate.toLocaleDateString('pt-BR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        alert(`✅ Agendamento confirmado!\n\n${owner} — ${model} (${color})\nPacote: ${packageName} (R$ ${packagePrice.toFixed(2).replace('.', ',')})\ nData: ${dateStr}\nHorário: ${selectedTime}`);
+
         // Clear fields
         document.getElementById('owner-name').value = '';
         document.getElementById('car-model').value = '';
         document.getElementById('car-color').value = '';
-        
+        packageSelect.selectedIndex = 0;
+
         closeModal();
     } catch (error) {
         console.error("Erro ao salvar agendamento:", error);
@@ -260,14 +272,22 @@ if (viewPackagesBtn) {
     });
 }
 
-// Select package and go to booking
+// Select package card -> pre-select in modal
 document.querySelectorAll('.select-package').forEach(btn => {
     btn.addEventListener('click', () => {
         const packageName = btn.getAttribute('data-package');
-        
         openModal();
-        // Update heading with package name
-        document.querySelector('.booking-header h2').textContent = `Agendar ${packageName}`;
+        // Pre-select the package in the dropdown
+        setTimeout(() => {
+            const select = document.getElementById('booking-package');
+            if (select) {
+                for (let i = 0; i < select.options.length; i++) {
+                    if (select.options[i].value === packageName) {
+                        select.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+        }, 100);
     });
 });
-
