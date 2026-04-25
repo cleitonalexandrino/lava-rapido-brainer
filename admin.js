@@ -6,94 +6,153 @@ const kpiCarsToday = document.getElementById('kpi-cars-today');
 const kpiRevToday = document.getElementById('kpi-rev-today');
 const kpiCarsComp = document.getElementById('kpi-cars-comp');
 const kpiRevComp = document.getElementById('kpi-rev-comp');
+const kpiGrowth = document.getElementById('kpi-growth');
 const kpiAvg = document.getElementById('kpi-avg');
+
+// Returns value from booking: checks stored value or derives from package name
+const getBookingValue = (b) => {
+    if (b.value && b.value > 0) return b.value;
+    if (b.package && b.package.toLowerCase().includes('completa')) return 34.99;
+    return 14.99;
+};
+
+const isSameDay = (d1, d2) => {
+    const a = new Date(d1); a.setHours(0,0,0,0);
+    const b = new Date(d2); b.setHours(0,0,0,0);
+    return a.getTime() === b.getTime();
+};
+
+const isSameMonth = (d1, d2) => {
+    const a = new Date(d1);
+    const b = new Date(d2);
+    return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth();
+};
 
 const loadDashboard = async () => {
     let bookings = [];
     try {
+        // Order by appointment date ascending so upcoming show first
         const q = query(collection(db, "bookings"), orderBy("timestamp", "desc"));
         const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-            let data = doc.data();
-            // Provide a fallback ID for sorting if timestamp is not sufficient
-            bookings.push({ id: doc.id, ...data });
+        querySnapshot.forEach((document) => {
+            bookings.push({ id: document.id, ...document.data() });
         });
     } catch (error) {
         console.error("Erro ao buscar agendamentos do banco:", error);
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:#ff3b30; padding:32px;">Erro ao carregar dados. Verifique a conexão.</td></tr>`;
+        return;
     }
 
-    const today = new Date();
-    today.setHours(0,0,0,0);
+    const now = new Date();
 
-    const sevenDaysAgo = new Date(today);
-    sevenDaysAgo.setDate(today.getDate() - 7);
+    // --- Today's appointments (by appointment date) ---
+    const todayBookings = bookings.filter(b => isSameDay(b.date, now));
 
-    // Filter Today
-    const todayBookings = bookings.filter(b => {
-        const bDate = new Date(b.date);
-        bDate.setHours(0,0,0,0);
-        return bDate.getTime() === today.getTime();
-    });
+    // --- This month's appointments (by appointment date) ---
+    const thisMonthBookings = bookings.filter(b => isSameMonth(b.date, now));
 
-    // Filter Last Week (Same Day)
-    const lastWeekBookings = bookings.filter(b => {
-        const bDate = new Date(b.date);
-        bDate.setHours(0,0,0,0);
-        return bDate.getTime() === sevenDaysAgo.getTime();
-    });
+    // --- Last month's appointments (by appointment date) ---
+    const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const lastMonthBookings = bookings.filter(b => isSameMonth(b.date, lastMonth));
 
-    // Calculate Today Stats
-    const totalCarsToday = todayBookings.length;
-    const totalRevToday = todayBookings.reduce((acc, curr) => acc + curr.value, 0);
+    // --- Upcoming (today + future, ordered by date) ---
+    const todayStart = new Date(); todayStart.setHours(0,0,0,0);
+    const upcomingBookings = bookings
+        .filter(b => new Date(b.date) >= todayStart)
+        .sort((a, b) => new Date(a.date) - new Date(b.date));
 
-    // Calculate Last Week Stats
-    const totalCarsLastWeek = lastWeekBookings.length;
-    const totalRevLastWeek = lastWeekBookings.reduce((acc, curr) => acc + curr.value, 0);
+    // --- KPI Values ---
+    const carsToday = todayBookings.length;
+    const revToday = todayBookings.reduce((acc, b) => acc + getBookingValue(b), 0);
 
-    // Update UI
-    kpiCarsToday.textContent = totalCarsToday;
-    kpiRevToday.textContent = `R$ ${totalRevToday.toFixed(2)}`;
+    const carsThisMonth = thisMonthBookings.length;
+    const carsLastMonth = lastMonthBookings.length;
 
-    // Comparison Logic
-    updateComparison(kpiCarsComp, totalCarsToday, totalCarsLastWeek, 'lavagens');
-    updateComparison(kpiRevComp, totalRevToday, totalRevLastWeek, 'financeiro');
+    const allValues = thisMonthBookings.map(getBookingValue);
+    const avgTicket = allValues.length > 0 ? allValues.reduce((a, b) => a + b, 0) / allValues.length : 0;
 
-    // Average Ticket
-    const avg = totalCarsToday > 0 ? (totalRevToday / totalCarsToday) : 0;
-    kpiAvg.textContent = `R$ ${avg.toFixed(2)}`;
+    // Growth % month over month
+    const growth = carsLastMonth > 0
+        ? Math.round(((carsThisMonth - carsLastMonth) / carsLastMonth) * 100)
+        : (carsThisMonth > 0 ? 100 : 0);
 
-    // Populate Table (Most Recent First)
+    // --- Update KPI cards ---
+    kpiCarsToday.textContent = carsToday;
+
+    // Show upcoming count below if today = 0
+    if (carsToday === 0 && upcomingBookings.length > 0) {
+        kpiCarsComp.innerHTML = `<span style="color:#86868b;">${upcomingBookings.length} próximo(s) agendado(s)</span>`;
+    } else {
+        kpiCarsComp.innerHTML = `<span style="color:#86868b;">${carsThisMonth} este mês</span>`;
+    }
+
+    kpiRevToday.textContent = `R$ ${revToday.toFixed(2).replace('.', ',')}`;
+
+    const revMonth = thisMonthBookings.reduce((acc, b) => acc + getBookingValue(b), 0);
+    kpiRevComp.innerHTML = `<span style="color:#86868b;">R$ ${revMonth.toFixed(2).replace('.', ',')} este mês</span>`;
+
+    if (kpiGrowth) {
+        const sign = growth >= 0 ? '+' : '';
+        kpiGrowth.textContent = `${sign}${growth}%`;
+    }
+
+    kpiAvg.textContent = `R$ ${avgTicket.toFixed(2).replace('.', ',')}`;
+
+    // --- Populate Table: show upcoming first, then recent past (max 20 rows) ---
+    const pastBookings = bookings
+        .filter(b => new Date(b.date) < todayStart)
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .slice(0, 5);
+
+    const tableRows = [...upcomingBookings, ...pastBookings].slice(0, 20);
+
     tbody.innerHTML = '';
-    
-    bookings.slice(0, 10).forEach(b => {
+
+    if (tableRows.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:#86868b; padding:32px;">Nenhum agendamento encontrado.</td></tr>`;
+        return;
+    }
+
+    tableRows.forEach(b => {
+        const appointmentDate = new Date(b.date);
+        const formattedDate = appointmentDate.toLocaleDateString('pt-BR');
+        const isToday = isSameDay(appointmentDate, now);
+        const isPast = appointmentDate < todayStart;
+        const value = getBookingValue(b);
+
+        const statusBadge = isPast
+            ? `<span class="status-badge" style="background:rgba(255,255,255,0.06); color:#86868b;">Concluído</span>`
+            : isToday
+                ? `<span class="status-badge" style="background:rgba(255,165,0,0.15); color:#ff9f0a;">Hoje</span>`
+                : `<span class="status-badge">Confirmado</span>`;
+
         const row = document.createElement('tr');
-        const formattedDate = new Date(b.date).toLocaleDateString('pt-BR');
-        
         row.innerHTML = `
-            <td>${b.owner}</td>
-            <td>${b.model}</td>
-            <td>${b.color}</td>
-            <td>${b.package}</td>
-            <td>${b.time}</td>
-            <td>${formattedDate}</td>
-            <td><span class="status-badge">Confirmado</span></td>
+            <td>${b.owner || '—'}</td>
+            <td>${b.model || '—'}</td>
+            <td>${b.color || '—'}</td>
+            <td>${b.package || '—'}</td>
+            <td>${b.time || '—'}</td>
+            <td style="${isToday ? 'color: #ff9f0a; font-weight:600;' : ''}">${formattedDate}</td>
+            <td>R$ ${value.toFixed(2).replace('.', ',')}</td>
+            <td>${statusBadge}</td>
             <td><button class="btn-delete" data-id="${b.id}">Cancelar</button></td>
         `;
         tbody.appendChild(row);
     });
 
-    // Eventos dos botões de exclusão
+    // Delete / cancel handlers
     document.querySelectorAll('.btn-delete').forEach(btn => {
         btn.addEventListener('click', async (e) => {
             const id = e.target.getAttribute('data-id');
-            if (confirm("Tem certeza que deseja cancelar p agendamento? O horário ficará vago novamente para novos clientes.")) {
+            if (confirm("Cancelar este agendamento? O horário ficará disponível novamente.")) {
                 try {
-                    e.target.textContent = "Apagando...";
+                    e.target.textContent = "Cancelando...";
                     await deleteDoc(doc(db, "bookings", id));
-                    loadDashboard(); // Recarrega os dados do banco imediatamente
+                    loadDashboard();
                 } catch (error) {
-                    console.error("Erro ao deletar:", error);
-                    alert("Erro ao excluir. Tente novamente.");
+                    console.error("Erro ao cancelar:", error);
+                    alert("Erro ao cancelar. Tente novamente.");
                     e.target.textContent = "Cancelar";
                 }
             }
@@ -101,25 +160,5 @@ const loadDashboard = async () => {
     });
 };
 
-const updateComparison = (el, current, previous, label) => {
-    if (previous === 0) {
-        el.innerHTML = `<span class="growth-up">+100% vs sem. ant.</span>`;
-        return;
-    }
-
-    const diff = ((current - previous) / previous) * 100;
-    const isGrowth = diff >= 0;
-    const arrow = isGrowth ? '&uarr;' : '&darr;';
-    const colorClass = isGrowth ? 'growth-up' : 'growth-down';
-
-    el.innerHTML = `
-        <span class="${colorClass}">${arrow} ${Math.abs(diff).toFixed(0)}%</span>
-        <span style="color:#86868b; margin-left:4px;">vs semana anterior</span>
-    `;
-};
-
-// Auto-run on load
 loadDashboard();
-
-// Refresh every minute
-setInterval(loadDashboard, 60000);
+setInterval(loadDashboard, 30000); // Refresh every 30 seconds
